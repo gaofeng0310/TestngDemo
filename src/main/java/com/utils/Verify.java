@@ -23,14 +23,11 @@ public class Verify extends AbstractTestNGSpringContextTests {
     AaaMapper aaaMapper;
 
     @Test
-    public  void verifySelectByUserName(){
+    public  void verifySelectByUserName(String username,JSONObject expCheckDataJs){
 
-        List<Map<String,String>> list=userMapper.selectUserByUserName("苏美丽");
-        System.out.println(list);
-        JSONArray array=JSONArray.parseArray(JSONObject.toJSONString(list));
+        List<Map<String,String>> list=userMapper.selectUserByUserName(username);
+        Assert.assertEquals(list.get(0).get("username"),expCheckDataJs.getString("username"));
 
-//        if (expDataJS.containsKey("username"))
-         //   Assert.assertEquals(list.get(),"苏美丽");
         System.out.println("t_user 表校验通过");
     }
 

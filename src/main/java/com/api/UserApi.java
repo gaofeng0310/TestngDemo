@@ -9,6 +9,7 @@ import org.apache.http.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
@@ -16,24 +17,19 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 
-@ContextConfiguration(locations = {"classpath:DynamicParam.xml"})
-public class UserApi {
 
+public class UserApi extends AbstractTestNGSpringContextTests {
+
+    @Autowired
+    DynamicParam dynamicParam;
     Tool tool = new Tool();
 
-    String USER_HOST="";
+    String USER_HOST="47.99.64.37:8081";
     HttpHeleper httpHeleper = new HttpHeleper();
     String  APPLICATION_JSON="application/json";
     String APPLICATION_X_FROM="application/x-www-form-urlencoded";
 
 
-    @Autowired
-    DynamicParam dynamicParam;
-
-    @Test
-    public void as(){
-        System.out.println(dynamicParam.getUser_host());
-    }
 
     /***
      * 根据username查询用户信息
@@ -72,6 +68,10 @@ public class UserApi {
     }
 
 
+    public HttpResponse userLogin(JSONObject params,Map<String,String> headers) throws IOException {
+        HttpResponse response = httpHeleper.get(USER_HOST,CaseUrl.LOGIN,params,headers);
+        return response;
+    }
 
 
 

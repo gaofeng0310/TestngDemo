@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.api.UserApi;
 import com.dataprovider.UserData;
+import com.utils.Login;
 import com.utils.Verify;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -13,19 +14,33 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.testng.Assert;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import com.utils.Response;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class userTestCase {
+@ContextConfiguration(locations = {"classpath:applicationContext-mybatis-userDao.xml", "classpath:applicationContext-mybatis-aaaDao.xml"})
+public class userTestCase  extends AbstractTestNGSpringContextTests {
 
     UserApi userApi = new UserApi();
-    Map<String, String> headers = new HashMap<String, String>();//装用户后台头信息的
+    Map<String, String> header = new HashMap<String, String>();//装用户后台头信息的
+
+
     @Autowired
     Verify verify;
+
+    @BeforeTest
+    public  void login() throws IOException {
+        Login login=new Login();
+        String token = login.userlogin();
+        header.put("token",token);
+    }
+
+
 
     /**
      * 根据username查询用户信息
@@ -39,16 +54,15 @@ public class userTestCase {
     public void getUserByName (String caseID,String caseName,String username,String expData) throws IOException {
         JSONObject param = new JSONObject();
         param.put("username", username);
-        JSONObject json = Response.httpResponseEntityToJson(userApi.getUserByName(param,headers));
+        JSONObject json = Response.httpResponseEntityToJson(userApi.getUserByName(param,header));
         System.out.println(json);
         JSONObject dataJS=json.getJSONObject("data");
 
         //校验数据
         JSONObject expDataJS= JSON.parseObject(expData);
         if (json.getString("status").equals("200")){
-         //   verify.verifySelectByUserName(username,expDataJS);
+            verify.verifySelectByUserName(username,expDataJS);
         }
-
     }
 
 
@@ -64,7 +78,7 @@ public class userTestCase {
     public void userInsert(String caseID,String caseName,String params,String expData) throws IOException {
         JSONObject paramJS=JSON.parseObject(params);
 
-        JSONObject responseJS=Response.httpResponseEntityToJson(userApi.userInsert(paramJS,headers,false));
+        JSONObject responseJS=Response.httpResponseEntityToJson(userApi.userInsert(paramJS,header,false));
         if(responseJS.getString("status").equals("200")){
             System.out.println("添加用户接口调用成功");
         }
@@ -79,7 +93,7 @@ public class userTestCase {
     @Test
     public void userList() throws IOException {
         JSONObject params=new JSONObject();
-        JSONObject responseJS = Response.httpResponseEntityToJson(userApi.userList(params,headers));
+        JSONObject responseJS = Response.httpResponseEntityToJson(userApi.userList(params,header));
         if (responseJS.getString("status").equals("200")){
             System.out.println("查询用户列表接口调用成功，返回内容："+responseJS);
         }
@@ -145,4 +159,5 @@ public class userTestCase {
         JSONObject json=JSONObject.parseObject(result);
         System.out.println(json);
     }
+
 }

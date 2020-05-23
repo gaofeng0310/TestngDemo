@@ -5,6 +5,8 @@ import lombok.Getter;
 @Getter
 public class CaseUrl {
 
+    //登陆接口
+    public static String LOGIN="/login";
     //查询用户列表
     public static String UESR_LIST="/list";
     //修改用户
