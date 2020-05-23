@@ -25,7 +25,7 @@ public class Verify extends AbstractTestNGSpringContextTests {
     @Test
     public  void verifySelectByUserName(String uid,String username,JSONObject expCheckDataJs){
 
-        List<Map<String,String>> list=userMapper.selectUserByUserName00(uid,username);
+        List<Map<String,String>> list=userMapper.selectUser(uid,username);
 
         if(null!=list && list.size() !=0){
             if(expCheckDataJs.containsKey("username"))Assert.assertEquals(list.get(0).get("username"),expCheckDataJs.getString("username"));
@@ -45,7 +45,7 @@ public class Verify extends AbstractTestNGSpringContextTests {
     public  void bbbb(){
 
         System.out.println("进行 quartz 库查询数据");
-        System.out.println(aaaMapper.selectUserByUserName("开心"));
+        System.out.println(userMapper.selectUser("26","苏美丽"));
     }
 
 

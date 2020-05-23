@@ -33,4 +33,15 @@ public interface UserMapper {
             "</script>"})
     List<Map<String,String>> selectUserByUserName00(@Param("uid") String uid,@Param("username") String username);
 
+
+    @Select("<script>" +
+            "SELECT * FROM t_user " +
+            "<where>"+
+            "<if test=\"uid != null\">  uid = #{uid} </if>"+
+            "<if test=\"username != null\"> and username = #{username} </if>"+
+            "</where>"+
+            "</script>")
+    List<Map<String,String>> selectUser(@Param("uid") String uid,@Param("username") String username);
+
+
 }

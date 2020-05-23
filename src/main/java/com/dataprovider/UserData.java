@@ -16,16 +16,6 @@ public class UserData {
         return params;
     }
 
-    @DataProvider(name = "userInsert001")
-    public Object[][] userInsert001(){
-        Object[][] params=new Object[][]{
-                //删除接口数据依赖添加接口，不要动这个数据
-                {"userInsert001","添加用户",
-                        "{\"username\":\"小明\",\"password\":\"123456\",\"age\":12,\"sex\":\"男\"}"},
-        };
-        return  params;
-    }
-
     @DataProvider(name = "getUserByName")
     public Object[][] getUserByName(){
         Object[][] params=new Object[][]{
