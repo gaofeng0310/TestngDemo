@@ -88,6 +88,7 @@ public class userTestCase  extends AbstractTestNGSpringContextTests {
         System.out.println(responseJS);
 
     }
+
     @Test(dataProvider = "userUpdate",dataProviderClass = UserData.class)
     public void userUpdate(String caseID,String caseName,String params,String expData) throws IOException {
         JSONObject paramJS=JSON.parseObject(params);
