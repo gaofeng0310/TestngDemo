@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 
-@ContextConfiguration(locations = {"classpath:applicationContext-mybatis-userDao.xml", "classpath:applicationContext-mybatis-aaaDao.xml"})
+@ContextConfiguration(locations = {"classpath:applicationContext-mybatis-userDao.xml", "classpath:applicationContext-mybatis-aaaDao.xml", "classpath:DynamicParam.xml"})
 public class Verify extends AbstractTestNGSpringContextTests {
     @Autowired
     UserMapper userMapper;
@@ -23,12 +23,21 @@ public class Verify extends AbstractTestNGSpringContextTests {
     AaaMapper aaaMapper;
 
     @Test
-    public  void verifySelectByUserName(String username,JSONObject expCheckDataJs){
+    public  void verifySelectByUserName(String uid,String username,JSONObject expCheckDataJs){
 
-        List<Map<String,String>> list=userMapper.selectUserByUserName(username);
-        Assert.assertEquals(list.get(0).get("username"),expCheckDataJs.getString("username"));
+        List<Map<String,String>> list=userMapper.selectUserByUserName00(uid,username);
 
-        System.out.println("t_user 表校验通过");
+        if(null!=list && list.size() !=0){
+            if(expCheckDataJs.containsKey("username"))Assert.assertEquals(list.get(0).get("username"),expCheckDataJs.getString("username"));
+            if(expCheckDataJs.containsKey("password"))Assert.assertEquals(list.get(0).get("password"),expCheckDataJs.getString("password"));
+            if(expCheckDataJs.containsKey("age"))Assert.assertEquals(list.get(0).get("age"),expCheckDataJs.getString("age"));
+            if(expCheckDataJs.containsKey("sex"))Assert.assertEquals(list.get(0).get("sex"),expCheckDataJs.getString("sex"));
+            if(expCheckDataJs.containsKey("iddelete"))Assert.assertEquals(list.get(0).get("iddelete"),expCheckDataJs.getString("iddelete"));
+
+            System.out.println("t_user 表校验通过");
+        }
+        System.out.println("list is null");
+
     }
 
 

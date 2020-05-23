@@ -56,6 +56,32 @@ public class UserApi extends AbstractTestNGSpringContextTests {
     }
 
     /**
+     * 修改用户
+     * @param params
+     * @param headers
+     * @param completeUrl
+     * @return
+     * @throws IOException
+     */
+    public HttpResponse userUpdate(JSONObject params,Map<String,String> headers,boolean completeUrl) throws IOException {
+        HttpResponse response=httpHeleper.post(USER_HOST,CaseUrl.UESR_UPDATE,params,headers,false,APPLICATION_JSON);
+        return response;
+    }
+
+    /**
+     * 删除用户
+     * @param params
+     * @param headers
+     * @return
+     * @throws IOException
+     */
+    public HttpResponse userDelete(JSONObject params, Map<String, String> headers) throws IOException {
+        HttpResponse response = httpHeleper.get(USER_HOST, CaseUrl.USER_DELETE, params, headers);
+        return response;
+    }
+
+
+    /**
      * 查询用例列表
      * @param params
      * @param headers
@@ -66,13 +92,6 @@ public class UserApi extends AbstractTestNGSpringContextTests {
         HttpResponse response = httpHeleper.get(USER_HOST,CaseUrl.UESR_LIST,params,headers);
         return response;
     }
-
-
-    public HttpResponse userLogin(JSONObject params,Map<String,String> headers) throws IOException {
-        HttpResponse response = httpHeleper.get(USER_HOST,CaseUrl.LOGIN,params,headers);
-        return response;
-    }
-
 
 
 

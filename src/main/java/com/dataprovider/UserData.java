@@ -19,6 +19,7 @@ public class UserData {
     @DataProvider(name = "userInsert001")
     public Object[][] userInsert001(){
         Object[][] params=new Object[][]{
+                //删除接口数据依赖添加接口，不要动这个数据
                 {"userInsert001","添加用户",
                         "{\"username\":\"小明\",\"password\":\"123456\",\"age\":12,\"sex\":\"男\"}"},
         };
@@ -44,6 +45,13 @@ public class UserData {
         return params;
     }
 
-
+    @DataProvider(name = "userUpdate")
+    public Object[][] userUpdate(){
+        Object[][] params=new Object[][]{
+                {"userInsert_001","查询用户存在","{\"uid\":8,\"password\":\"999999\",\"sex\":\"男\",\"age\":18,\"username\":"+System.currentTimeMillis()+"}",
+                        "{\"password\":\"9999999\",\"sex\":\"男\",\"age\":18}"}
+        };
+        return params;
+    }
 
 }

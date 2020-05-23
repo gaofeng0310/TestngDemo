@@ -4,6 +4,8 @@
 	   xsi:schemaLocation="http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
+	<bean id="verify" class="com.utils.Verify"/>
+
 	<bean id="dynamicParam" class="com.utils.DynamicParam">
 		<property name="user_host" value="47.99.64.37:8081"/>
 	</bean>

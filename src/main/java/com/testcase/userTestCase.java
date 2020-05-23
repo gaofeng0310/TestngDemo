@@ -21,14 +21,15 @@ import org.testng.annotations.Test;
 import com.utils.Response;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-@ContextConfiguration(locations = {"classpath:applicationContext-mybatis-userDao.xml", "classpath:applicationContext-mybatis-aaaDao.xml"})
+@ContextConfiguration(locations = {"classpath:applicationContext-mybatis-userDao.xml",
+        "classpath:applicationContext-mybatis-aaaDao.xml", "classpath:DynamicParam.xml"})
 public class userTestCase  extends AbstractTestNGSpringContextTests {
 
     UserApi userApi = new UserApi();
     Map<String, String> header = new HashMap<String, String>();//装用户后台头信息的
-
 
     @Autowired
     Verify verify;
@@ -61,7 +62,7 @@ public class userTestCase  extends AbstractTestNGSpringContextTests {
         //校验数据
         JSONObject expDataJS= JSON.parseObject(expData);
         if (json.getString("status").equals("200")){
-            verify.verifySelectByUserName(username,expDataJS);
+            verify.verifySelectByUserName("",username,expDataJS);
         }
     }
 
@@ -77,14 +78,30 @@ public class userTestCase  extends AbstractTestNGSpringContextTests {
     @Test(dataProvider = "userInsert",dataProviderClass = UserData.class)
     public void userInsert(String caseID,String caseName,String params,String expData) throws IOException {
         JSONObject paramJS=JSON.parseObject(params);
+        JSONObject expDataJS = JSON.parseObject(expData);
 
         JSONObject responseJS=Response.httpResponseEntityToJson(userApi.userInsert(paramJS,header,false));
         if(responseJS.getString("status").equals("200")){
             System.out.println("添加用户接口调用成功");
+            verify.verifySelectByUserName("",paramJS.getString("username"),expDataJS);
         }
         System.out.println(responseJS);
 
     }
+    @Test(dataProvider = "userUpdate",dataProviderClass = UserData.class)
+    public void userUpdate(String caseID,String caseName,String params,String expData) throws IOException {
+        JSONObject paramJS=JSON.parseObject(params);
+        JSONObject expDataJS = JSON.parseObject(expData);
+
+        JSONObject responseJS=Response.httpResponseEntityToJson(userApi.userUpdate(paramJS,header,false));
+        if(responseJS.getString("status").equals("200")){
+            System.out.println("添加用户接口调用成功");
+            verify.verifySelectByUserName(paramJS.getString("uid"),"",expDataJS);
+        }
+        System.out.println(responseJS);
+
+    }
+
 
     /**
      * 查询用户列表
@@ -99,7 +116,7 @@ public class userTestCase  extends AbstractTestNGSpringContextTests {
         }
     }
 
-
+//分割线-----------------------------------------------------------------------------------------------------------------
     /**
      * 这个是最原始的调法，post请求
      * @throws IOException

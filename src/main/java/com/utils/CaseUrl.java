@@ -15,5 +15,8 @@ public class CaseUrl {
     public static String UESR_INSERT="/insert";
     //根据用户姓名查询用户信息
     public static  String GET_USER_BY_NAME="/getUserByName";
+    //删除用户
+    public static  String USER_DELETE="/delete";
+
 
 }
