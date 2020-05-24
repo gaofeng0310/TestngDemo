@@ -39,7 +39,7 @@ public class UserData {
     public Object[][] userUpdate(){
         Object[][] params=new Object[][]{
                 {"userInsert_001","查询用户存在","{\"uid\":8,\"password\":\"999999\",\"sex\":\"男\",\"age\":18,\"username\":"+System.currentTimeMillis()+"}",
-                        "{\"password\":\"9999999\",\"sex\":\"男\",\"age\":18}"}
+                        "{\"password\":\"999999\",\"sex\":\"男\",\"age\":18}"}
         };
         return params;
     }

@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import com.utils.Response;
 import java.io.IOException;
@@ -122,6 +123,7 @@ public class userTestCase  extends AbstractTestNGSpringContextTests {
      * 这个是最原始的调法，post请求
      * @throws IOException
      */
+    @Ignore
     @Test
     public void userInsert001() throws IOException {
         //定义json,把参数放进json里
@@ -148,6 +150,7 @@ public class userTestCase  extends AbstractTestNGSpringContextTests {
      * 这个是最原始的调法，get请求，无参数
      * @throws IOException
      */
+    @Ignore
     @Test
     public void userList001() throws IOException {
         String result;
@@ -163,6 +166,7 @@ public class userTestCase  extends AbstractTestNGSpringContextTests {
      * 根据username查询用户信息
      * @throws IOException
      */
+    @Ignore
     @Test
     public void getUserByName001() throws IOException {
         HttpGet httpGet =new HttpGet("http://47.99.64.37:8081/getUserByName?username=姓名");

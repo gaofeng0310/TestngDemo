@@ -25,18 +25,16 @@ public class Verify extends AbstractTestNGSpringContextTests {
     @Test
     public  void verifySelectByUserName(String uid,String username,JSONObject expCheckDataJs){
 
-        List<Map<String,String>> list=userMapper.selectUser(uid,username);
+        List<Map<String,String>> list=userMapper.selectUserByUserName(uid,username);
 
         if(null!=list && list.size() !=0){
             if(expCheckDataJs.containsKey("username"))Assert.assertEquals(list.get(0).get("username"),expCheckDataJs.getString("username"));
             if(expCheckDataJs.containsKey("password"))Assert.assertEquals(list.get(0).get("password"),expCheckDataJs.getString("password"));
-            if(expCheckDataJs.containsKey("age"))Assert.assertEquals(list.get(0).get("age"),expCheckDataJs.getString("age"));
+       //     if(expCheckDataJs.containsKey("age"))Assert.assertEquals(list.get(0).get("age"),expCheckDataJs.getString("age"));
             if(expCheckDataJs.containsKey("sex"))Assert.assertEquals(list.get(0).get("sex"),expCheckDataJs.getString("sex"));
-            if(expCheckDataJs.containsKey("iddelete"))Assert.assertEquals(list.get(0).get("iddelete"),expCheckDataJs.getString("iddelete"));
-
+  //          if(expCheckDataJs.containsKey("iddelete"))Assert.assertEquals(list.get(0).get("iddelete"),expCheckDataJs.getString("iddelete"));
             System.out.println("t_user 表校验通过");
-        }
-        System.out.println("list is null");
+        }else{ System.out.println("list is null");}
 
     }
 
@@ -45,7 +43,7 @@ public class Verify extends AbstractTestNGSpringContextTests {
     public  void bbbb(){
 
         System.out.println("进行 quartz 库查询数据");
-        System.out.println(userMapper.selectUser("26","苏美丽"));
+        System.out.println(userMapper.selectUser("","苏美丽"));
     }
 
 
