@@ -2,13 +2,7 @@
 <suite name="这是我自己写的测试套件">
     <test name="这是测试模块">
         <classes>
-            <class name="com.testcase.userTestCase">
-                <methods>
-                    <inclued name="getUserByName"/>
-                    <inclued name="userInsert"/>
-                    <inclued name="userUpdate"/>
-                </methods>
-            </class>
+            <class name="com.testcase.userTestCase"/>
         </classes>
     </test>
     <listeners>
